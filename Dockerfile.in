@@ -1,28 +1,23 @@
+# Copyright (c) 2016, Jan Wielemaker, Franco Masotti.
+# See LICENSE file for details.
+
 # our R base image
 FROM r-base
 
-RUN apt-get update && apt-get install -y \
-	libcurl4-openssl-dev \
+
+RUN apt-get update
+
+RUN apt-get install -y \
 	libssl-dev \
 	libcairo-dev
 
 # install packages
 # these are ones I like
-RUN echo 'install.packages(c("ggplot2"), repos="http://cran.us.r-project.org", dependencies=TRUE)' > /tmp/packages.R \
+RUN echo 'install.packages(c("ggplot2"), repos="http://cran.mirror.garr.it/mirrors/CRAN/", dependencies=TRUE)' > /tmp/packages.R \
     && Rscript /tmp/packages.R
 
 RUN echo 'install.packages("Rserve",,"http://rforge.net/",type="source")' > /tmp/packages2.R \
     && Rscript /tmp/packages2.R
-
-# Disable development tools
-RUN chmod o-rwx \
-	/usr/lib/gcc /usr/lib/python* /usr/lib/tcltk /usr/lib/valgrind \
-	/sbin /usr/sbin /usr/local/bin \
-	/usr/bin/* /bin/* && \
-    chmod o+x \
-	/bin/bash /bin/ls /bin/uname /bin/sh && \
-    chmod o+rx \
-	/usr/bin/R /usr/bin
 
 # create an R user
 ENV HOME /home/ruser
