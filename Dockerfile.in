@@ -13,7 +13,7 @@ RUN apt-get install -y \
 
 # install packages
 # these are ones I like
-RUN echo 'install.packages(c("ggplot2"), repos="http://cran.mirror.garr.it/mirrors/CRAN/", dependencies=TRUE)' > /tmp/packages.R \
+RUN echo 'install.packages(c("ggplot2","plot3D"), repos="http://cran.mirror.garr.it/mirrors/CRAN/", dependencies=TRUE)' > /tmp/packages.R \
     && Rscript /tmp/packages.R
 
 RUN echo 'install.packages("Rserve",,"http://rforge.net/",type="source")' > /tmp/packages2.R \
